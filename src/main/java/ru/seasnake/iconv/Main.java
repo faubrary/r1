@@ -10,7 +10,7 @@ public class Main {
     public static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.info("args={}", (Object[]) args);
+        logger.info("{}={}", "args", args);
         if (args.length != 6) {
             System.out.println("Usage: java " + Main.class.getName() + " -f srcCharSet -t dstCharSet srcDir dstDir");
             System.out.println("AvailableCharsets: ");
