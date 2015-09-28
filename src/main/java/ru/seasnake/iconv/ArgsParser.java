@@ -1,15 +1,44 @@
 package ru.seasnake.iconv;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArgsParser {
-    public ArgsParser(String[] args) {
+    private final ArrayList<String> problems = new ArrayList<>();
+    private Charset srcCharSet;
+    private Charset dstCharSet;
+    private final Path srcDir;
+    private final Path dstDir;
+
+    public ArgsParser(String... args) {
+        try {
+            srcCharSet = Charset.forName(args[0]);
+        } catch (Exception e) {
+            problems.add("Specify srcCharSet correctly");
+        }
+        try {
+            dstCharSet = Charset.forName(args[1]);
+        } catch (Exception e) {
+            problems.add("Specify dstCharSet correctly");
+        }
+        srcDir = Paths.get(args[2]);
+        File[] srcFileList = srcDir.toFile().listFiles();
+        if (srcFileList == null || srcFileList.length == 0)
+            problems.add("srcDir must be not empty directory");
+
+        dstDir = Paths.get(args[3]);
+        File[] dstFileList = dstDir.toFile().listFiles();
+        if (dstFileList == null || dstFileList.length > 0)
+            problems.add("dstDir must be empty directory");
     }
 
     public boolean foundProblems() {
-        return true;
+        return problems.size() > 0;
     }
 
     public void writeProblems(PrintStream out) {
@@ -17,18 +46,22 @@ public class ArgsParser {
     }
 
     public Path getSrcDir() {
-        return null;
+        return srcDir;
     }
 
     public Path getDstDir() {
-        return null;
+        return dstDir;
     }
 
     public Charset getSrcCharSet() {
-        return null;
+        return srcCharSet;
     }
 
     public Charset getDstCharSet() {
-        return null;
+        return dstCharSet;
+    }
+
+    List<String> getProblems() {
+        return problems;
     }
 }

@@ -11,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("{}={}", "args", args);
-        if (args.length != 6) {
-            System.out.println("Usage: java " + Main.class.getName() + " -f srcCharSet -t dstCharSet srcDir dstDir");
+        if (args.length != 4) {
+            System.out.println("Usage: java " + Main.class.getName() + " srcCharSet dstCharSet srcDir dstDir");
             System.out.println("AvailableCharsets: ");
             Set<String> availCSs = Charset.availableCharsets().keySet();
             for (String availCS : availCSs)
