@@ -38,11 +38,16 @@ public class ArgsParser {
     }
 
     public boolean foundProblems() {
-        return problems.size() > 0;
+        return !problems.isEmpty();
     }
 
     public void writeProblems(PrintStream out) {
-
+        out.println("Found problems:");
+        for (String problem : problems) {
+            out.print(problem.hashCode());
+            out.print('\t');
+            out.println(problem);
+        }
     }
 
     public Path getSrcDir() {

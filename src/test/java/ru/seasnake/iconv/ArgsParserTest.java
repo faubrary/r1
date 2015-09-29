@@ -4,8 +4,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +21,7 @@ public class ArgsParserTest {
     private File dstDir;
 
     @Test
-    public void allArgs() throws IOException {
+    public void allArgsOk() throws IOException {
         mkDirs();
         //noinspection ResultOfMethodCallIgnored
         File.createTempFile("file_1", null, srcDir);
@@ -39,17 +41,23 @@ public class ArgsParserTest {
     }
 
     @Test
-    public void withoutDstDir() throws IOException {
-        fail();
-    }
-
-    @Test
-    public void wrongCharset() throws IOException {
+    public void wrongArgs() throws IOException {
         mkDirs();
-        ArgsParser argsParser = new ArgsParser("-f", "cp-1251", "-t", "UTF-8",
+        ArgsParser argsParser = new ArgsParser("non-existing1", "non-existing2",
                 srcDir.getAbsolutePath(), dstDir.getAbsolutePath());
         assertTrue(argsParser.foundProblems());
         List<String> problems = argsParser.getProblems();
-        assertEquals(Arrays.asList("Wrong charset cp-1251"), problems);
+        List<String> expected = Arrays.asList(
+                "Specify srcCharSet correctly",
+                "Specify dstCharSet correctly",
+                "srcDir must be not empty directory"
+        );
+        assertEquals(expected, problems);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(256);
+        argsParser.writeProblems(new PrintStream(baos));
+        String out = baos.toString();
+        for (String problem : expected)
+            assertTrue(out.contains(problem));
     }
 }
