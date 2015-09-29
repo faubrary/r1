@@ -24,7 +24,7 @@ public class ArgsParserTest {
     public void allArgsOk() throws IOException {
         mkDirs();
         //noinspection ResultOfMethodCallIgnored
-        File.createTempFile("file_1", null, srcDir);
+        new File(srcDir, "file_1").createNewFile();
         ArgsParser argsParser = new ArgsParser(
                 "windows-1251", "UTF-8",
                 srcDir.getAbsolutePath(), dstDir.getAbsolutePath());

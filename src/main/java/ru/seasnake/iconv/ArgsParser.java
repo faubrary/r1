@@ -44,7 +44,6 @@ public class ArgsParser {
     public void writeProblems(PrintStream out) {
         out.println("Found problems:");
         for (String problem : problems) {
-            out.print(problem.hashCode());
             out.print('\t');
             out.println(problem);
         }
