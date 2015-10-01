@@ -1,0 +1,19 @@
+﻿= Обучение
+:lang: ru
+:encoding: utf-8
+:toc:
+:numbered:
+
+== 01.10.2015
+
+.`java.util`-коллекции:
+* `List` -- задан порядок.
+* `Set`  -- задана проверка уникальности.
+
+Дополнительные полезные классы: `Collections`, `Arrays`.
+
+.TODO
+* Прочитать (реализовать) красно-чёрное дерево.
+* Tutorial:
+** https://docs.oracle.com/javase/tutorial/essential/io/walk.html[Walking the File Tree]
+** https://docs.oracle.com/javase/tutorial/essential/io/pathClass.html[The Path Class]
